@@ -1,21 +1,32 @@
-import { createContext, useContext, useEffect, useMemo, useReducer, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from "react";
 import { STATUSES } from "../constants/board";
 import { isOverdue } from "../utils/date";
 import { loadTasks, saveTasks } from "../utils/storage";
 
-const AppContext = createContext(null);
+const AppContext = createContext();
 
-/* ─────────────────────────────────────────────
+/*
    1. Task reducer: every change to the list goes through here
-   ───────────────────────────────────────────── */
+ */
 function tasksReducer(tasks, action) {
   switch (action.type) {
     case "add":
       return [...tasks, action.task];
     case "update":
-      return tasks.map((t) => (t.id === action.id ? { ...t, ...action.changes } : t));
+      return tasks.map((t) =>
+        t.id === action.id ? { ...t, ...action.changes } : t,
+      );
     case "move": // drag-and-drop and the mobile button both land here
-      return tasks.map((t) => (t.id === action.id ? { ...t, status: action.status } : t));
+      return tasks.map((t) =>
+        t.id === action.id ? { ...t, status: action.status } : t,
+      );
     case "delete":
       return tasks.filter((t) => t.id !== action.id);
     default:
@@ -23,20 +34,21 @@ function tasksReducer(tasks, action) {
   }
 }
 
-/* ─────────────────────────────────────────────
+/*
    2. Small helpers and defaults
-   ───────────────────────────────────────────── */
+ */
 const DEFAULT_FILTERS = { search: "", priority: "all", status: "all" };
 const MODAL_CLOSED = { mode: null, task: null, status: "todo" };
 
 // Earliest due date first; no date goes last; ties keep creation order.
 const FAR_FUTURE = "9999-12-31";
 const byDueDate = (a, b) =>
-  (a.dueDate || FAR_FUTURE).localeCompare(b.dueDate || FAR_FUTURE) || a.createdAt - b.createdAt;
+  (a.dueDate || FAR_FUTURE).localeCompare(b.dueDate || FAR_FUTURE) ||
+  a.createdAt - b.createdAt;
 
-/* ─────────────────────────────────────────────
+/*
    3. Provider: tasks, filters and modal in one place
-   ───────────────────────────────────────────── */
+ */
 export function AppProvider({ children }) {
   // The third argument reads saved tasks once, on first render only.
   const [tasks, dispatch] = useReducer(tasksReducer, undefined, loadTasks);
@@ -56,7 +68,12 @@ export function AppProvider({ children }) {
       addTask: (fields) =>
         dispatch({
           type: "add",
-          task: { id: crypto.randomUUID(), status: "todo", createdAt: Date.now(), ...fields },
+          task: {
+            id: crypto.randomUUID(),
+            status: "todo",
+            createdAt: Date.now(),
+            ...fields,
+          },
         }),
       updateTask: (id, changes) => dispatch({ type: "update", id, changes }),
       moveTask: (id, status) => dispatch({ type: "move", id, status }),
@@ -69,11 +86,12 @@ export function AppProvider({ children }) {
       resetFilters: () => setFilters(DEFAULT_FILTERS),
 
       // Task dialog
-      openCreate: (status = "todo") => setModal({ mode: "create", task: null, status }),
+      openCreate: (status = "todo") =>
+        setModal({ mode: "create", task: null, status }),
       openEdit: (task) => setModal({ mode: "edit", task, status: task.status }),
       closeModal: () => setModal(MODAL_CLOSED),
     }),
-    []
+    [],
   );
 
   // What the screen draws: tasks per column and headline stats.
@@ -85,7 +103,7 @@ export function AppProvider({ children }) {
       (t) =>
         (priority === "all" || t.priority === priority) &&
         (status === "all" || t.status === status) &&
-        (!query || t.title.toLowerCase().includes(query))
+        (!query || t.title.toLowerCase().includes(query)),
     );
 
     // Start every column empty so an empty column still renders.
@@ -112,16 +130,15 @@ export function AppProvider({ children }) {
 
   const value = useMemo(
     () => ({ ...board, filters, modal, ...actions }),
-    [board, filters, modal, actions]
+    [board, filters, modal, actions],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 
-/* ─────────────────────────────────────────────
+/*
    4. Hook: the only way components read board state
-   ───────────────────────────────────────────── */
-// eslint-disable-next-line react-refresh/only-export-components
+ */
 export function useBoard() {
   const ctx = useContext(AppContext);
   if (!ctx) throw new Error("useBoard must be used inside <AppProvider>");
