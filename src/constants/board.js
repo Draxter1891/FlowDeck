@@ -12,9 +12,9 @@ export const STATUSES = [
 
 // `badge` styles the chip, `edge` colors the card's left strip.
 export const PRIORITIES = [
-  { id: "low", label: "Low", badge: "bg-accent/12 border-line text-muted", edge: "bg-line" },
-  { id: "medium", label: "Medium", badge: "bg-olive/25 border-olive text-ink", edge: "bg-olive" },
-  { id: "high", label: "High", badge: "bg-accent border-accent text-canvas", edge: "bg-accent" },
+  { id: "low", label: "Low", badge: "bg-accent border-line text-gray-900", edge: "bg-line" },
+  { id: "medium", label: "Medium", badge: "bg-yellow-400/80 border-yellow-500 text-yellow-950", edge: "bg-olive" },
+  { id: "high", label: "High", badge: "bg-red-500/70 border-red-950 text-red-950 text-canvas", edge: "bg-accent" },
 ];
 
 // Where the one-tap button on a card sends a task (used on mobile).

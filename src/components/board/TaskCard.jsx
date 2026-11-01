@@ -31,11 +31,7 @@ function DueDate({ due, status }) {
   );
 }
 
-// Pure display: it knows nothing about the board. Everything arrives as props,
-// which is what lets React.memo skip re-rendering cards that didn't change.
-//   onEdit / onDelete: edit and trash buttons
-//   onMove: optional one-tap move button (phones only)
-//   lifted: the floating copy shown while dragging
+
 function TaskCard({ task, onEdit, onDelete, onMove, lifted = false }) {
   const [confirming, setConfirming] = useState(false);
   const { edge } = getPriority(task.priority);
@@ -43,7 +39,7 @@ function TaskCard({ task, onEdit, onDelete, onMove, lifted = false }) {
 
   return (
     <article
-      className={`relative overflow-hidden rounded-lg border p-4 pl-5 transition-colors ${
+      className={`relative overflow-hidden rounded-3xl border p-4 pl-5 transition-colors ${
         lifted
           ? "border-olive bg-card-hover shadow-lifted"
           : "border-line bg-card shadow-card hover:border-olive hover:bg-card-hover"

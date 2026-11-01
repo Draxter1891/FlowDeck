@@ -1,12 +1,10 @@
 @import "tailwindcss";
 
-/* Design tokens from "Nocturnal Atelier".
-   Every color lives here, so a restyle means editing this block only. */
+
 @theme {
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-label: "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  /* Surfaces: each step up is one level of elevation */
   --color-canvas: #131712;       /* canvas */
   --color-track: #1a2018;      /* column trays + inputs */
   --color-container: #20261e;  /* counters, secondary buttons */
@@ -29,7 +27,7 @@
   --color-mist: #becab7;         /* highlights, tallies */
   --color-danger: #d46b6b;       /* overdue only */
 
-  /* Shadows: restrained, dark-tinted, with a faint top rim */
+ 
   --shadow-card: inset 0 1px 0 0 rgb(227 231 223 / 0.06),
     0 2px 6px rgb(0 0 0 / 0.35), 0 8px 16px rgb(0 0 0 / 0.2);
   --shadow-lifted: 0 12px 32px rgb(0 0 0 / 0.5), 0 4px 10px rgb(0 0 0 / 0.3);

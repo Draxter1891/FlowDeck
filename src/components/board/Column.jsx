@@ -17,7 +17,7 @@ export default function Column({ status, tasks }) {
     <section
       ref={ref}
       aria-label={status.label}
-      className={`flex min-w-80 flex-1 flex-col rounded-lg border bg-track transition-colors ${
+      className={`flex min-w-80 flex-1 flex-col rounded-3xl border bg-track transition-colors ${
         isDropTarget ? "border-accent" : "border-line-subtle"
       }`}
     >

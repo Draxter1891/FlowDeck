@@ -1,7 +1,7 @@
 // One button for the whole app. Pick a look with `variant`, a shape with `size`.
 const VARIANTS = {
   primary:
-    "border border-transparent bg-accent font-semibold text-canvas hover:bg-accent-hover active:bg-olive",
+    "border border-transparent bg-white font-semibold text-canvas hover:bg-accent-hover active:bg-accent",
   secondary:
     "border border-line bg-container font-medium text-ink hover:border-olive hover:bg-card",
   ghost:
